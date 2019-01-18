@@ -1,4 +1,13 @@
+up:
+  - docker
+
 commands:
-  test:
+  build:
+    run: docker build -t="omz" .
+    desc: building the docker image used to test the project
+  test-docker:
     run: echo "not yet impemented"
     desc: install fantastic-kit to a docker environment
+  load-dev:
+    run: ./load-dev
+    desc: loading development version of fantastic kit

@@ -1,6 +1,6 @@
-#compdef bev
+#compdef fk
 
-_bev() { 
+_fk() { 
     local curcontext="$curcontext" state line
     typeset -A opt_args
 
@@ -10,7 +10,7 @@ _bev() {
 
     case $state in
     cmd)
-        _arguments '1:bev cmds:(cd clone openpr run)'
+        _arguments '1:bev cmds:(cd clone openpr run load-dev)'
     ;;
     args)
         case $words[2] in
@@ -23,4 +23,4 @@ _bev() {
     esac
 }
 
-_bev "$@"
+_fk "$@"
