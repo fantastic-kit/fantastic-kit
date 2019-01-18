@@ -27,7 +27,7 @@ fclone()
   fcd $cdDir
 }
 
-fopenpr()
+fpr()
 {
   if git rev-parse --git-dir &> /dev/null; then
     curBranch=$(git symbolic-ref --short HEAD)
@@ -81,14 +81,14 @@ fk()
   clone)
     fclone $2
   ;;
-  openpr)
-    fopenpr $2
+  pr)
+    fpr $2
   ;;
   load-dev)
     fload-dev
   ;;
   *)
-    frun $1
+    fk.rb $1
   ;;
   esac
 }
