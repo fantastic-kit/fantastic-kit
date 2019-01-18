@@ -27,7 +27,7 @@ fclone()
   fcd $cdDir
 }
 
-fopenpr()
+fpr()
 {
   if git rev-parse --git-dir &> /dev/null; then
     curBranch=$(git symbolic-ref --short HEAD)
@@ -64,8 +64,13 @@ frun()
   done
   echo "found fk.yml in $repoDir"
   cd $originalDir
-  frun.rb $repoDir/fk.yml
+  fk.rb $repoDir/fk.yml $@
 }
+
+fload-dev() {
+  source $HOME/src/github.com/fantastic-kit/bin/load-dev && load-dev
+}
+
 
 fk()
 {
@@ -76,15 +81,14 @@ fk()
   clone)
     fclone $2
   ;;
-  openpr)
-    fopenpr $2
+  pr)
+    fpr $2
   ;;
-  run)
-    frun $2
+  load-dev)
+    fload-dev
   ;;
   *)
-    echo "not yet implemented"
-    return 1
+    fk.rb $1
   ;;
   esac
 }
