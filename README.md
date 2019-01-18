@@ -35,7 +35,7 @@ Open github PRs if opened inside a git directory if the current branch is not ma
 fk pr
 ```
 
-### fk run
+### fk <custom-cmd>
 
 Create `fk.yml` file at the root of the project. Add custom commands to `commands` section.
 
