@@ -1,0 +1,4 @@
+commands:
+  test:
+    run: echo "not yet impemented"
+    desc: install fantastic-kit to a docker environment

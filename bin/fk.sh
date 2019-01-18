@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+fcd()
+{
+  cd $HOME/src/github.com/$1
+}
+
+fclone()
+{
+  cdDir=$1
+  if echo $1 | grep '/' > /dev/null; then
+    echo "Cloning from git@github.com:$1.git"
+    cdDir=$(cut -d'/' -f2 <<< $1)
+    if [ ! -d $HOME/src/github.com/$cdDir ]; then
+      git clone git@github.com:$1.git $HOME/src/github.com/$cdDir
+    else
+      echo "Already cloned, done."
+    fi
+  else
+    echo "Cloning from git@github.com:$(git config user.name)/$1.git"
+    if [ ! -d $HOME/src/github.com/$cdDir ]; then
+      git clone git@github.com:$(git config user.name)/$1.git $HOME/src/github.com/$1
+    else
+      echo "Already cloned, done."
+    fi
+  fi
+  fcd $cdDir
+}
+
+fopenpr()
+{
+  if git rev-parse --git-dir &> /dev/null; then
+    curBranch=$(git symbolic-ref --short HEAD)
+    if [[ $curBranch != "master" ]]; then
+      # assuming ssh remote since `fclone` clone from ssh remote by default
+      repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
+      ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
+      xdg-open https://github.com/$ownerName/$repoName/pull/new/$curBranch &> /dev/null
+    else
+      echo "cannot open PR for master branch"
+    fi
+  else
+    echo "cannot open pr since current directory is not a git repo"
+    return 1
+  fi
+}
+
+frun()
+{
+  originalDir=$(pwd)
+  repoDir=$(pwd)
+  while :; do
+    if [[ $(pwd) == "/" ]]; then
+      echo "not in a fk enabled dir"
+      cd $originalDir
+      return 1
+    fi
+    if [[ -f $(pwd)/fk.yml ]]; then
+      repoDir=$(pwd)
+      break
+    else
+      cd ..
+    fi
+  done
+  echo "found fk.yml in $repoDir"
+  cd $originalDir
+  frun.rb $repoDir/fk.yml
+}
+
+fk()
+{
+  case $1 in
+  cd)
+    fcd $2
+  ;;
+  clone)
+    fclone $2
+  ;;
+  openpr)
+    fopenpr $2
+  ;;
+  run)
+    frun $2
+  ;;
+  *)
+    echo "not yet implemented"
+    return 1
+  ;;
+  esac
+}
