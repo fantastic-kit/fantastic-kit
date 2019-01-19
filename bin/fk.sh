@@ -51,20 +51,20 @@ frun()
   repoDir=$(pwd)
   while :; do
     if [[ $(pwd) == "/" ]]; then
-      echo "not in a fk enabled dir"
+      echo "not in a fantastically enabled dir"
       cd $originalDir
       return 1
     fi
-    if [[ -f $(pwd)/fk.yml ]]; then
+    if [[ -f $(pwd)/kit.yml ]]; then
       repoDir=$(pwd)
       break
     else
       cd ..
     fi
   done
-  echo "found fk.yml in $repoDir"
+  echo "found kit.yml in $repoDir"
   cd $originalDir
-  fk.rb $repoDir/fk.yml $@
+  fk.rb $repoDir/kit.yml $@
 }
 
 fload-dev() {
@@ -88,7 +88,7 @@ fk()
     fload-dev
   ;;
   *)
-    fk.rb $1
+    frun $@
   ;;
   esac
 }
