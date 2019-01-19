@@ -35,7 +35,7 @@ fpr()
       # assuming ssh remote since `fclone` clone from ssh remote by default
       repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
       ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
-      if  curl -Ls -o /dev/null -w "%{url_effective}"  https://github.com/$ownerName/$repoName/pull/$curBranch | xargs curl -s -o /dev/null -w "%{http_code}" | grep 200 > /dev/null; then
+      if curl -s https://github.com/$ownerName/$repoName/pull/$curBranch | grep -o "href=\".*\"" | grep -v new; then
         xdg-open https://github.com/$ownerName/$repoName/pull/$curBranch &> /dev/null
       else
         xdg-open https://github.com/$ownerName/$repoName/pull/new/$curBranch &> /dev/null
