@@ -37,9 +37,9 @@ fk pr
 
 ### fk `<custom-cmd>`
 
-Create `fk.yml` file at the root of the project. Add custom commands to `commands` section.
+Create `kit.yml` file at the root of the project. Add custom commands to `commands` section.
 
-Example `fk.yml`: it compiles latex to pdf based on name of the subdirectory: 
+Example `kit.yml`: it compiles latex to pdf based on name of the subdirectory: 
 
 ``` yaml
 commands:
@@ -48,6 +48,6 @@ commands:
     desc: compiling latex file to pdf on change
 ```
 
-Then you can just run `fk latex` anywhere inside the root directory where `fk.yml` is located.
+Then you can just run `fk latex` anywhere inside the root directory where `kit.yml` is located.
 
 

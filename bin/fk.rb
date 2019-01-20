@@ -6,7 +6,7 @@ configs = YAML.load_file(ARGV[0])
 action=ARGV[1]
 
 unless configs && configs.has_key?("commands")
-  puts "command section is missing from bev.yml"
+  puts "command section is missing from kit.yml"
   exit(1)
 end
 
