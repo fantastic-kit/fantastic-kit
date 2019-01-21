@@ -32,7 +32,7 @@ appendIfNotExist "source \$HOME/.fantastic-kit/bin/fk.sh" true
 appendIfNotExist "export FANTASTIC_ROOT=$kitDir" true
 
 # update $PATH to include scripts needed for fk
-appendIfNotExist "export PATH=$kitDir/bin:$PATH" true
+appendIfNotExist "export PATH=$kitDir/bin:\$PATH" true
 
 # setup fpath for autocomplete function
 appendIfNotExist "fpath=(\$HOME/.fantastic-kit/autocompletion \$fpath)" true
