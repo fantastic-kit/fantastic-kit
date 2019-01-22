@@ -35,10 +35,10 @@ fpr()
       # assuming ssh remote since `fclone` clone from ssh remote by default
       repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
       ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
-      if curl -s https://github.com/$ownerName/$repoName/pull/$curBranch | grep -o "href=\".*\"" | grep -v new; then
-        xdg-open https://github.com/$ownerName/$repoName/pull/$curBranch &> /dev/null
-      else
+      if pr-exists.rb repoName ownerName curBranch; then
         xdg-open https://github.com/$ownerName/$repoName/pull/new/$curBranch &> /dev/null
+      else
+        xdg-open https://github.com/$ownerName/$repoName/pull/$curBranch &> /dev/null
       fi
     else
       echo "cannot open PR for master branch"
