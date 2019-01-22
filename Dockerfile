@@ -2,8 +2,8 @@ from zshusers/zsh-5.6.2
 
 # install oh-my-zsh
 run apt-get update && \
-  apt-get install -y wget git ruby curl vim
-run wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+  apt-get install -y git ruby curl vim
+run curl -fsSL https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | zsh || true
 
 # overwrite oh-my-zsh configs
 copy misc/zshrc /root/.zshrc
