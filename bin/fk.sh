@@ -18,7 +18,7 @@ fclone()
     fi
   else
     echo "Cloning from git@github.com:$(git config user.name)/$1.git"
-    if [ ! -d $HOME/src/github.com/$cdDir ]; then
+    if [[ ! -d $HOME/src/github.com/$cdDir ]]; then
       git clone git@github.com:$(git config user.name)/$1.git $HOME/src/github.com/$1
     else
       echo "Already cloned, done."
@@ -35,8 +35,11 @@ fpr()
       # assuming ssh remote since `fclone` clone from ssh remote by default
       repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
       ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
-      if pr-exists.rb repoName ownerName curBranch; then
+      pr-exists.rb repoName ownerName curBranch
+      if [[ $? -eq 0 ]]; then
         xdg-open https://github.com/$ownerName/$repoName/pull/new/$curBranch &> /dev/null
+      elif [[ $? -eq 2 ]]; then
+        return 1
       else
         xdg-open https://github.com/$ownerName/$repoName/pull/$curBranch &> /dev/null
       fi
