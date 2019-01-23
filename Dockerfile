@@ -2,7 +2,9 @@ FROM zshusers/zsh-5.6.2
 
 # install oh-my-zsh
 RUN apt-get update && \
-  apt-get install -y git ruby curl vim
+  apt-get install -y git ruby curl vim && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 RUN curl -fsSL https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | zsh || true
 
 # overwrite oh-my-zsh configs
