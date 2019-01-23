@@ -2,7 +2,7 @@
 
 Shameless cheap knock off version of Shopify internal developer tool `dev`.
 
-Command line utility `fk` (stands for *F*antastic *K*it)
+Command line utility `fk` (stands for **F**antastic **K**it)
 
 `fk` provides few useful commands that increase developers productivity. `fk` assumes all git source directory locate at `$HOME/src/github.com/`.
 

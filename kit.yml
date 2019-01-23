@@ -5,9 +5,6 @@ commands:
   build:
     run: docker build -t="omz" .
     desc: building the docker image used to test the project
-  test-docker:
-    run: echo "not yet impemented"
+  docker:
+    run: docker run -it --rm --name zsh -v $(pwd)/bin/install.sh:/root/install.sh -v $HOME/.ssh:/root/.ssh -v $HOME/.gitconfig/:/root/.gitconfig omz
     desc: install fantastic-kit to a docker environment
-  load-dev:
-    run: ./load-dev
-    desc: loading development version of fantastic kit

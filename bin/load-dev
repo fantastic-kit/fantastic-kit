@@ -4,7 +4,7 @@ load-dev() {
   export PATH=$(pwd)/bin:$PATH
   source $(pwd)/bin/fk.sh
   rm -f $HOME/.oh-my-zsh/completions/_fk
-  ln -s $(pwd)/autocompletion/_fk $HOME/.oh-my-zsh/completions/_fk
+  ln -s $(pwd)/autocompletion/_fk.zsh $HOME/.oh-my-zsh/completions/_fk
   if type _fk &>/dev/null; then
     unfunction _fk
   fi
