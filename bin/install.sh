@@ -2,10 +2,7 @@
 
 appendIfNotExist() {
   if ! grep -Fxq "$1" $HOME/.zshrc; then
-    if $2; then
-      echo "Appending $1 to .zshrc"
-    fi
-    echo $1 >> $HOME/.zshrc
+    echo $1 | tee -a $HOME/.zshrc
   fi
 }
 
@@ -27,22 +24,24 @@ else
 fi
 
 
-appendIfNotExist "######## Setup script setup by fantastic-kit ########" false
+echo -e "Appending following configurations to ~/.zshrc\e[91m"
+
+appendIfNotExist "######## Setup script setup by fantastic-kit ########"
 
 # sourcing fk.sh if it is not already added to the .zshrc file
-appendIfNotExist "source \$HOME/.fantastic-kit/bin/fk.sh" true
+appendIfNotExist "source \$HOME/.fantastic-kit/bin/fk.sh"
 
 # export env var for fantastic-kit itself
-appendIfNotExist "export FANTASTIC_ROOT=$kitDir" true
+appendIfNotExist "export FANTASTIC_ROOT=$kitDir"
 
 # update $PATH to include scripts needed for fk
-appendIfNotExist "export PATH=$kitDir/bin:\$PATH" true
+appendIfNotExist "export PATH=$kitDir/bin:\$PATH"
 
 # setup fpath for autocomplete function
-appendIfNotExist "fpath=(\$FANTASTIC_ROOT/autocompletion \$fpath)" true
+appendIfNotExist "fpath=(\$FANTASTIC_ROOT/autocompletion \$fpath)"
 appendIfNotExist "autoload -Uz compinit"
 appendIfNotExist "compinit"
 
-appendIfNotExist "######### End of the auto generated scripts #########" false
+appendIfNotExist "######### End of the auto generated scripts #########"
 
-echo -e "Installation complete, please run \e[94msource ~/.zshrc \e[39mto enable fantastic-kit"
+echo -e "\e[39mInstallation complete, please run \e[94msource ~/.zshrc \e[39mto enable fantastic-kit"
