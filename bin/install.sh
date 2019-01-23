@@ -9,7 +9,7 @@ appendIfNotExist() {
 kitDir=$HOME/.fantastic-kit
 
 # in case user has already installed fk, nuke everything and reinstall
-if [ -d $kitDir ]; then
+if [[ -d $kitDir ]]; then
   read -p "fantastic-kit is already installed in the system, do you want to clean reinstall? [Yy/Nn]" reclone < /dev/tty
   if [[ $reclone == [Yy] ]]; then
     echo "Removing existing fantastic-kit files"
