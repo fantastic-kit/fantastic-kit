@@ -13,15 +13,19 @@ kitDir=$HOME/.fantastic-kit
 
 # in case user has already installed fk, nuke everything and reinstall
 if [ -d $kitDir ]; then
-  echo "found existing fantastic-kit installation. Removing old files..."
-  rm -rf $kitDir
+  read -p "fantastic-kit is already installed in the system, do you want to clean reinstall? [Yy/Nn]" reclone < /dev/tty
+  if [[ $reclone == [Yy] ]]; then
+    echo "Removing existing fantastic-kit files"
+    rm -rf $kitDir
+    git clone --depth=1 https://github.com/fantastic-kit/fantastic-kit.git $kitDir
+  else
+    echo "Skipping recloning fantastic-kit"
+  fi
+else
+  echo "Downloading fantastic-kit source to $kitDir"
+  git clone --depth=1 https://github.com/fantastic-kit/fantastic-kit.git $kitDir
 fi
 
-
-echo "Downloading fantastic-kit source to $kitDir"
-mkdir -p "$kitDir"
-cd $kitDir
-git clone --depth=1 https://github.com/fantastic-kit/fantastic-kit.git .
 
 appendIfNotExist "######## Setup script setup by fantastic-kit ########" false
 
@@ -35,7 +39,7 @@ appendIfNotExist "export FANTASTIC_ROOT=$kitDir" true
 appendIfNotExist "export PATH=$kitDir/bin:\$PATH" true
 
 # setup fpath for autocomplete function
-appendIfNotExist "fpath=(\$HOME/.fantastic-kit/autocompletion \$fpath)" true
+appendIfNotExist "fpath=(\$FANTASTIC_ROOT/autocompletion \$fpath)" true
 appendIfNotExist "autoload -Uz compinit"
 appendIfNotExist "compinit"
 
