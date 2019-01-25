@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'optparse'
+
+options = {:get => false, :set => false}
+OptionParser.new do |opts|
+  opts.on('-g key', '--get key', 'get value for <key>') do |key|
+    options[:get] = true
+    options[:key] = key
+  end
+
+  opts.on('-s key', '--set key', 'set config for <key>') do |s|
+    options[:key] = s
+    options[:set] = true
+    options[:value] = ARGV.last
+  end
+end.parse!
+
+def show_help
+  msg = <<-EOF
+Usage: fk config [options]
+  fk config --get <key>
+  fk config --set <key> <value>
+  EOF
+
+  puts msg
+  exit(1)
+end
+
+show_help unless options[:get] or options[:set]
+
+puts options
+
+#begin
+#  configs = YAML.load_file("#{ENV['HOME']}/.config/fantastic-kit/config.yml")
+#  puts configs
+#rescue => e
+#  raise "Unable to open config file: #{e}"
+#end
+
+
