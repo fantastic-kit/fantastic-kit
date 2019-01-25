@@ -32,6 +32,13 @@ fclone()
   fcd $cdDir
 }
 
+remote-info()
+{
+  repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
+  ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
+  echo $repoName $ownerName
+}
+
 fpr()
 {
   if git rev-parse --git-dir &> /dev/null; then
