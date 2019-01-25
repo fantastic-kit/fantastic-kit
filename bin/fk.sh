@@ -81,21 +81,23 @@ fload-dev() {
 
 fk()
 {
-  case $1 in
+  cmd=$1
+  shift;
+  case $cmd in
   cd)
-    fcd $2
+    fcd $@
   ;;
   clone)
-    fclone $2
+    fclone $@
   ;;
   pr)
-    fpr $2
+    fpr $@
   ;;
   load-dev)
     fload-dev
   ;;
   config)
-    fconfigs $2
+    fconfigs $@
   ;;
   *)
     frun $@
