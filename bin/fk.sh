@@ -34,8 +34,12 @@ fclone()
 
 remote-info()
 {
-  repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
-  ownerName=$(git config --get remote.origin.url | awk -F "/" '{print $(NF-1)}')
+  repoName=$(basename $(git config --get remote.origin.url) .git)
+  if git config --get remote.origin.url | grep "@" > /dev/null; then
+    ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
+  else 
+    ownerName=$(git config --get remote.origin.url | awk -F "/" '{print $(NF-1)}')
+fi
   echo $repoName $ownerName
 }
 
@@ -62,8 +66,12 @@ fpr()
 
 frepo()
 {
+  if ! git rev-parse --git-dir &>/dev/null; then
+    echo "not in a git repo"
+    return 1
+  fi
   read repoName ownerName < <(remote-info)
-  xdg-open https://github.com/$ownerName/$repoName &> /dev/null
+  _fk_wrapper_open https://github.com/$ownerName/$repoName &> /dev/null
 }
 
 frun()
