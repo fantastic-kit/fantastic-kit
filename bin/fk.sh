@@ -35,7 +35,7 @@ fclone()
 remote-info()
 {
   repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
-  ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
+  ownerName=$(git config --get remote.origin.url | awk -F "/" '{print $(NF-1)}')
   echo $repoName $ownerName
 }
 
@@ -44,14 +44,7 @@ fpr()
   if git rev-parse --git-dir &> /dev/null; then
     curBranch=$(git symbolic-ref --short HEAD)
     if [[ $curBranch != "master" ]]; then
-      # assuming ssh remote since `fclone` clone from ssh remote by default
-      repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
-      # Only SSH remotes would have @.
-      if git config --get remote.origin.url | grep "@" > /dev/null; then
-        ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
-      else 
-        ownerName=$(git config --get remote.origin.url | awk -F "/" '{print $(NF-1)}')
-      fi
+      read repoName ownerName < <(remote-info)
       branch-exists.rb $repoName $ownerName $curBranch
       if [[ $? -eq 0 ]]; then
         _fk_wrapper_open https://github.com/$ownerName/$repoName/pull/$curBranch
@@ -65,6 +58,12 @@ fpr()
     echo "cannot open pr since current directory is not a git repo"
     return 1
   fi
+}
+
+frepo()
+{
+  read repoName ownerName < <(remote-info)
+  xdg-open https://github.com/$ownerName/$repoName &> /dev/null
 }
 
 frun()
@@ -118,6 +117,8 @@ fk()
     # enable upgrade flag
     fk config --key=autoUpdateEnabled --value=true > /dev/null
     kit-check-update
+  repo)
+    frepo
   ;;
   *)
     frun $cmd
