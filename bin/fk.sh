@@ -94,6 +94,9 @@ fk()
   load-dev)
     fload-dev
   ;;
+  config)
+    fconfigs $2
+  ;;
   *)
     frun $@
   ;;
