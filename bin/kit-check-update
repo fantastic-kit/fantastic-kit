@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/fan'
+
+updater = Fan::Updater.new
+updater.update! if updater.need_to_update?

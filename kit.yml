@@ -6,15 +6,15 @@ commands:
     run: docker build -t="omz" .
     desc: building the docker image used to test the project
   docker:
-    run: docker run -it --rm --name zsh -v $(pwd)/bin/install.sh:/root/install.sh -v $HOME/.ssh:/root/.ssh -v $HOME/.gitconfig/:/root/.gitconfig omz
+    run: docker run -it --rm --name zsh -v $HOME/src/github.com/fantastic-kit/bin/install.sh:/root/install.sh -v $HOME/.ssh:/root/.ssh -v $HOME/.gitconfig/:/root/.gitconfig omz
     desc: mount the installation script
   docker-installed:
     run:
       docker run -it --rm --name zsh
-        --mount type=bind,source=$(pwd)/bin/install.sh,target=/root/install.sh,readonly
+        --mount type=bind,source=$HOME/src/github.com/fantastic-kit/bin/install.sh,target=/root/install.sh,readonly
         --mount type=bind,source=$HOME/.ssh,target=/root/.ssh,readonly
         --mount type=bind,source=$HOME/.gitconfig,target=/root/.gitconfig,readonly
-        --mount type=bind,source=$(pwd)/misc/zshrc_installed,target=/root/.zshrc,readonly
-        --mount type=bind,source=$(pwd),target=/root/.fantastic-kit,readonly
+        --mount type=bind,source=$HOME/src/github.com/fantastic-kit/misc/zshrc_installed,target=/root/.zshrc,readonly
+        --mount type=bind,source=$HOME/src/github.com/fantastic-kit,target=/root/.fantastic-kit,readonly
         omz
     desc: directly install fantastic-kit into docker env

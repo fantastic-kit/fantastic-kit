@@ -2,6 +2,9 @@
 
 source $FANTASTIC_ROOT/bin/wrappers.sh
 
+# check for updates
+kit-check-update
+
 fcd()
 {
   cd $HOME/src/github.com/$1
