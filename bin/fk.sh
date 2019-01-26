@@ -105,7 +105,7 @@ fk()
     fconfigs $@
   ;;
   *)
-    frun $@
+    frun $cmd
   ;;
   esac
 }
