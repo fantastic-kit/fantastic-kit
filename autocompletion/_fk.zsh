@@ -18,7 +18,7 @@ _fk() {
             _alternative 'arg::_path_files -W "$HOME/src/github.com" -/'
           ;;
           config)
-            _alternative '*:fk config cmds:(--key --value)'
+            _alternative '*:fk config cmds:(--key= --value=)'
           ;;
           *)
             _files 
