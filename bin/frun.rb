@@ -18,5 +18,5 @@ end
 
 cmd = cmds["run"]["run"]
 
-puts "bev is running #{cmd}"
-system(cmd)
+puts "fk is running #{cmd} #{ARGV[2..-1]}"
+exec(cmd, ARGV[2..-1].join(' '))

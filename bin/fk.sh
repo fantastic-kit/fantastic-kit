@@ -3,7 +3,7 @@
 source $FANTASTIC_ROOT/bin/wrappers.sh
 
 # check for updates
-kit-check-update
+#kit-check-update
 
 fcd()
 {
@@ -113,7 +113,7 @@ fk()
     kit-check-update
   ;;
   *)
-    frun $cmd
+    frun $cmd $@
   ;;
   esac
 }
