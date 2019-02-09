@@ -1,8 +1,10 @@
 require 'yaml'
+require 'fileutils'
 
 module Fan
   class Configs
     CONFIG_PATH = "#{ENV['HOME']}/.config/fantastic-kit/config.yml"
+    DEFAULT_CONFIG_PATH = "#{ENV['FANTASTIC_ROOT']}/configs/default_config.yml"
 
     def get(key: nil)
       raise ArgumentError if key.nil?
@@ -23,7 +25,14 @@ module Fan
     private
 
     def configs
+      ensure_configs_file_exist
       @configs ||= YAML.load_file(CONFIG_PATH)
+    end
+
+    def ensure_configs_file_exist
+      unless File.exist?(CONFIG_PATH)
+        FileUtils.cp DEFAULT_CONFIG_PATH, CONFIG_PATH
+      end
     end
   end
 end
