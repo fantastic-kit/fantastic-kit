@@ -34,7 +34,12 @@ fpr()
     if [[ $curBranch != "master" ]]; then
       # assuming ssh remote since `fclone` clone from ssh remote by default
       repoName=$(git config --get remote.origin.url | xargs basename | cut -d'.' -f1)
-      ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
+      # Only SSH remotes would have @.
+      if git config --get remote.origin.url | grep "@" > /dev/null; then
+        ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
+      else 
+        ownerName=$(git config --get remote.origin.url | awk -F "/" '{print $(NF-1)}')
+      fi
       pr-exists.rb repoName ownerName curBranch
       if [[ $? -eq 0 ]]; then
         xdg-open https://github.com/$ownerName/$repoName/pull/new/$curBranch &> /dev/null
