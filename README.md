@@ -10,6 +10,8 @@ Command line utility `fk` (stands for **F**antastic **K**it)
 
 Run `curl https://raw.githubusercontent.com/fantastic-kit/fantastic-kit/master/bin/install.sh | bash`
 
+## Built-in commands
+
 ### fk cd
 
 `cd` into a project locate in `$HOME/src/github.com`, also supports zsh-autosuggest prompt. 
