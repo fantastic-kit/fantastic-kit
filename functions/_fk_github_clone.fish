@@ -15,4 +15,5 @@ function _fk_github_clone -a repository directory
     echo "Cloning from $ssh_url"
 
     git clone $ssh_url $directory
+    _fk_cd $directory
 end
