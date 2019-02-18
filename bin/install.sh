@@ -28,11 +28,11 @@ echo -e "Appending following configurations to ~/.zshrc\e[91m"
 
 appendIfNotExist "######## Setup script setup by fantastic-kit ########"
 
-# sourcing fk.sh if it is not already added to the .zshrc file
-appendIfNotExist "source \$HOME/.fantastic-kit/bin/fk.sh"
-
 # export env var for fantastic-kit itself
 appendIfNotExist "export FANTASTIC_ROOT=$kitDir"
+
+# sourcing fk.sh if it is not already added to the .zshrc file
+appendIfNotExist "source \$HOME/.fantastic-kit/bin/fk.sh"
 
 # update $PATH to include scripts needed for fk
 appendIfNotExist "export PATH=$kitDir/bin:\$PATH"
