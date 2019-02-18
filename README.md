@@ -6,6 +6,11 @@ Command line utility `fk` (stands for **F**antastic **K**it)
 
 `fk` provides few useful commands that increase developers productivity. `fk` assumes all git source directory locate at `$HOME/src/github.com/`.
 
+## Installation
+
+Run `curl https://raw.githubusercontent.com/fantastic-kit/fantastic-kit/master/bin/install.sh | bash`
+
+## Built-in commands
 
 ### fk cd
 
