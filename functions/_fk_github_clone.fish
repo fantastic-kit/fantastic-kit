@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function _fk_github_clone -d "Clone the given repository from github in the specified location" -a repository directory
+function _fk_github_clone -a repository directory
     set directory $HOME/src/github.com/$directory
     set ssh_url "git@github.com:$repository.git"
 

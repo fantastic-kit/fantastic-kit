@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function _fk_clone -d "Clone the given repository" -a repository
+function _fk_clone -a repository
     if echo $repository | grep '/' > /dev/null
         _fk_github_clone $repository $repository
     else
