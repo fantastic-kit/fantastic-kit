@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $FANTASTIC_ROOT/bin/wrappers.sh
+
 fcd()
 {
   cd $HOME/src/github.com/$1
@@ -42,11 +44,11 @@ fpr()
       fi
       pr-exists.rb repoName ownerName curBranch
       if [[ $? -eq 0 ]]; then
-        xdg-open https://github.com/$ownerName/$repoName/pull/new/$curBranch &> /dev/null
+        _fk_wrapper_open https://github.com/$ownerName/$repoName/pull/new/$curBranch
       elif [[ $? -eq 2 ]]; then
         return 1
       else
-        xdg-open https://github.com/$ownerName/$repoName/pull/$curBranch &> /dev/null
+        _fk_wrapper_open https://github.com/$ownerName/$repoName/pull/$curBranch
       fi
     else
       echo "cannot open PR for master branch"
