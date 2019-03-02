@@ -15,6 +15,8 @@ function fk -d "Command line utility for faster development process" -a cmd
             _fk_cd $argv[2..-1]
         case clone
             _fk_clone $argv[2..-1]
+        case pr
+            _fk_pr
         case complete
             _fk_complete
         case {,-h,{,--}help}
