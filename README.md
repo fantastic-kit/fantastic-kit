@@ -8,17 +8,28 @@ Command line utility `fk` (stands for **F**antastic **K**it)
 
 ## Installation
 
+### Bash
+
 Run `curl https://raw.githubusercontent.com/fantastic-kit/fantastic-kit/master/bin/install.sh | bash`
+
+### Fish
+
+Install fantastic kit using fisher. Run `fisher add fantastic-kit/fantastic-kit`
+
+The fish flavour does not support all the features, but they're going to be implemented soon. Currently, fish supports:
+
+- `fk cd`
+- `fk clone`
 
 ## Built-in commands
 
 ### fk cd
 
-`cd` into a project locate in `$HOME/src/github.com`, also supports zsh-autosuggest prompt. 
+`cd` into a project locate in `$HOME/src/github.com`, also supports zsh-autosuggest prompt.
 
 ### fk clone
 
-`git clone` a repository from github into `$HOME/src/github.com/` and `cd` into the project directory. It reads from `.gitconfig` for username for github. 
+`git clone` a repository from github into `$HOME/src/github.com/` and `cd` into the project directory. It reads from `.gitconfig` for username for github.
 
 Cloning your own repository
 
@@ -44,7 +55,7 @@ fk pr
 
 Create `kit.yml` file at the root of the project. Add custom commands to `commands` section.
 
-Example `kit.yml`: it compiles latex to pdf based on name of the subdirectory: 
+Example `kit.yml`: it compiles latex to pdf based on name of the subdirectory:
 
 ``` yaml
 commands:
@@ -54,5 +65,3 @@ commands:
 ```
 
 Then you can just run `fk latex` anywhere inside the root directory where `kit.yml` is located.
-
-
