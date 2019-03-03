@@ -7,15 +7,9 @@ function _fk_pr
     end
 
     set curr_branch (git symbolic-ref --short HEAD)
-
-    if test curr_branch = "master"
-        echo "Cannot open PR for master branch"
-        return 2
-    end
-
     set git_remote (git config --get remote.origin.url)
-    set repo_name (echo $git_remote | xargs basename | cut -d'.' -f1)
-    set owner_name (echo $git_remote | cut -d'/' -f1 | cut -d':' -f2)
+    set repo_name (basename $git_remote .git)
+    set owner_name (echo (basename (dirname $git_remote)) | cut -d':' -f2)
 
     open https://github.com/$owner_name/$repo_name/pull/$curr_branch
 end
