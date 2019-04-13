@@ -4,7 +4,7 @@ Shameless cheap knock off version of Shopify internal developer tool `dev`.
 
 Command line utility `fk` (stands for **F**antastic **K**it)
 
-`fk` provides few useful commands that increase developers productivity. `fk` assumes all git source directory locate at `$HOME/src/github.com/`.
+`fk` provides some useful commands that increase developers productivity. `fk` assumes all git source directory locate at `$HOME/src/github.com/`.
 
 ## Installation
 
@@ -25,7 +25,7 @@ The fish flavour does not support all the features, but they're going to be impl
 
 ### fk cd
 
-`cd` into a project locate in `$HOME/src/github.com`, also supports zsh-autosuggest prompt.
+`cd` into a project located in `$HOME/src/github.com`, also supports zsh-autosuggest prompt.
 
 ### fk clone
 
@@ -37,7 +37,7 @@ Cloning your own repository
 fk clone <my-own-repo>
 ```
 
-Cloning public repo of other users:
+Cloning someone else's public repo:
 
 ``` bash
 fk clone <git-username>/<repo-name>
