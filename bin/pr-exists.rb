@@ -24,3 +24,10 @@ rescue => e
 end
 
 exit(1) unless data.kind_of?(Array) && data.first.has_key?('url')
+
+result = %x( git ls-remote --heads git@github.com:user/repo.git branch-name | wc -l )
+
+if result == 1
+  exit(0)
+else 
+  exit(1)
