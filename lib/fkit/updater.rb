@@ -1,6 +1,6 @@
-require_relative '../fan'
+require_relative '../fkit'
 
-module Fan
+module FKit
   class Updater
     UPDATE_TIMESTAMP_FILE = "#{ENV['HOME']}/.config/fantastic-kit/lastUpdated"
 

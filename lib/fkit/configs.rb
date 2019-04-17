@@ -1,7 +1,7 @@
 require 'yaml'
 require 'fileutils'
 
-module Fan
+module FKit
   class Configs
     CONFIG_PATH = "#{ENV['HOME']}/.config/fantastic-kit/config.yml"
     DEFAULT_CONFIG_PATH = "#{ENV['FANTASTIC_ROOT']}/configs/default_config.yml"

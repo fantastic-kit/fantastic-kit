@@ -1,3 +1,3 @@
-module Fan
+module FKit
   VERSION = "0.1.0"
 end

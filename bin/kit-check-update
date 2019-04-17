@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/fan'
+require_relative '../lib/fkit'
 
-updater = Fan::Updater.new
-updater.update! if updater.need_to_update?
+updater = FKit::Updater.new
+if updater.need_to_update?
+  updater.update! 
+end
+
