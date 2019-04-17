@@ -4,7 +4,6 @@ require 'fileutils'
 module FKit
   class Configs
     CONFIG_PATH = "#{ENV['HOME']}/.config/fantastic-kit/config.yml"
-    DEFAULT_CONFIG_PATH = "#{ENV['FANTASTIC_ROOT']}/configs/default_config.yml"
 
     def get(key: nil)
       raise ArgumentError if key.nil?
@@ -20,6 +19,15 @@ module FKit
 
     def all
       configs
+    end
+
+    def help_text
+      msg = <<-EOF
+Usage: fk config [options]
+  fk config --key=<key>                  -- retrieve value stored at <key>
+  fk config --key=<key> --value=<value>  -- set <key> to <value>
+      EOF
+      msg
     end
 
     private
