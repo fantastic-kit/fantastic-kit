@@ -3,11 +3,11 @@ require 'fileutils'
 
 module FKit
   class Configs
-    CONFIG_PATH = "#{ENV['HOME']}/.config/fantastic-kit/config.yml"
+    CONFIG_PATH = "#{ENV['HOME']}/.config/fantastic-kit/config.yml".freeze
 
     # key constants
-    AUTO_UPDATE_ENABLED = 'autoUpdateEnabled'
-    UPDATE_POLL_INTERVAL_S = 'updatePollIntervalS'
+    AUTO_UPDATE_ENABLED = 'autoUpdateEnabled'.freeze
+    UPDATE_POLL_INTERVAL_S = 'updatePollIntervalS'.freeze
 
     def get(key: nil)
       raise ArgumentError if key.nil?
@@ -17,7 +17,7 @@ module FKit
 
     def set!(key: nil, value: nil)
       raise ArgumentError if key.nil? or key.nil?
-      configs[key] = value
+      configs[key] = sanitize_value(value)
       File.open(CONFIG_PATH, 'w') { |f| f.write configs.to_yaml }
     end
 
@@ -44,6 +44,17 @@ Usage: fk config [options]
     def ensure_configs_file_exist
       unless File.exist?(CONFIG_PATH)
         FileUtils.cp DEFAULT_CONFIG_PATH, CONFIG_PATH
+      end
+    end
+
+    def sanitize_value(val)
+      case val.downcase
+      when "true", "yes"
+        true
+      when "false", "no"
+        false
+      else
+        val
       end
     end
   end
