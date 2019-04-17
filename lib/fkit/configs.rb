@@ -5,6 +5,10 @@ module FKit
   class Configs
     CONFIG_PATH = "#{ENV['HOME']}/.config/fantastic-kit/config.yml"
 
+    # key constants
+    AUTO_UPDATE_ENABLED = 'autoUpdateEnabled'
+    UPDATE_POLL_INTERVAL_S = 'updatePollIntervalS'
+
     def get(key: nil)
       raise ArgumentError if key.nil?
       raise ArgumentError unless configs.has_key?(key)

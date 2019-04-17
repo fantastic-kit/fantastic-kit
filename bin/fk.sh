@@ -105,7 +105,12 @@ fk()
     fload-dev
   ;;
   config)
-    fconfigs $@
+    kit-config $@
+  ;;
+  update)
+    # enable upgrade flag
+    fk config --key=autoUpdateEnabled --value=true > /dev/null
+    kit-check-update
   ;;
   *)
     frun $cmd

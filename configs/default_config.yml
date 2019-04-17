@@ -1,2 +1,2 @@
-autoUpdateEnalbed: true
+autoUpdateEnabled: true
 updatePollIntervalS: 7200 # 60s * 60m * 2 = 7200

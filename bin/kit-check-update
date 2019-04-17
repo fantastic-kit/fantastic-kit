@@ -1,9 +1,27 @@
 #!/usr/bin/env ruby
 
+require 'readline'
 require_relative '../lib/fkit'
 
 updater = FKit::Updater.new
+configs = FKit::Configs.new
+
+# quietly exit if auto update is disabled
+unless configs.get(key: FKit::Configs::AUTO_UPDATE_ENABLED)
+  exit(0)
+end
+
 if updater.need_to_update?
-  updater.update! 
+  update = Readline
+    .readline("New fantastic-kit update available, update now? [y/n]", true)
+    .squeeze()
+    .strip
+  case update
+  when 'Y', 'y'
+    updater.update! 
+  else
+    # user choose not to update, turn off auto update
+    configs.set!(key: FKit::Configs::AUTO_UPDATE_ENABLED, value: false)
+  end
 end
 
