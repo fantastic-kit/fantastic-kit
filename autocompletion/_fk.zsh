@@ -10,7 +10,7 @@ _fk() {
 
     case $state in
     cmd)
-        _arguments '1:fk cmds:(cd clone config pr load-dev)'
+        _arguments '1:fk cmds:(cd clone config pr update load-dev)'
     ;;
     args)
         case $words[2] in
