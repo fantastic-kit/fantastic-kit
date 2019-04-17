@@ -18,24 +18,12 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-def show_help
-  msg = <<-EOF
-Usage: fk config [options]
-  fk config --key=<key>                  -- retrieve value stored at <key>
-  fk config --key=<key> --value=<value>  -- set <key> to <value>
-  EOF
-  puts msg
+configs = FKit::Configs.new
+
+unless options.has_key?(:key) or options[:list]
+  puts configs.help_text
   exit(1)
 end
-
-def valid_option?(opt)
-  false unless opt.has_key?(:key) or opt[:list]
-  true
-end
-
-show_help unless valid_option?(options)
-
-configs = FKit::Configs.new
 
 if options.has_key?(:value)
   configs.set!(key: options[:key], value: options[:value])
