@@ -42,7 +42,7 @@ fpr()
       else 
         ownerName=$(git config --get remote.origin.url | awk -F "/" '{print $(NF-1)}')
       fi
-      pr-exists.rb $repoName $ownerName $curBranch
+      branch-exists.rb $repoName $ownerName $curBranch
       if [[ $? -eq 0 ]]; then
         _fk_wrapper_open https://github.com/$ownerName/$repoName/pull/$curBranch
       elif [[ $? -eq -1 ]]; then

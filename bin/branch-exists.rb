@@ -9,8 +9,6 @@
 # Branch exists in remote repo
 #   0 - If branch exists in remote repo
 #   1 - If branch doesn't exist in remote repo
-#
-# Otherwise return -1
 
 repo_owner  = ARGV[0]
 repo_name   = ARGV[1]
@@ -24,7 +22,7 @@ if result.to_i == 1
   exit(0)
 else
   puts <<-EOF
-\nfatal: The current branch newbranch has no upstream branch.
+fatal: The current branch newbranch has no upstream branch.
 To push the current branch and set the remote as upstream, use
 \n\tgit push --set-upstream origin #{branch_name}\n\n
 EOF
