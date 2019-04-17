@@ -12,9 +12,6 @@
 #
 # Otherwise return -1
 
-require 'net/http'
-require 'json'
-
 repo_owner  = ARGV[0]
 repo_name   = ARGV[1]
 branch_name = ARGV[2]
