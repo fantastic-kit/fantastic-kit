@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require_relative '../lib/fan'
+require_relative '../lib/fkit'
 
 options = {list: false}
 OptionParser.new do |opts|
@@ -35,7 +35,7 @@ end
 
 show_help unless valid_option?(options)
 
-configs = Fan::Configs.new
+configs = FKit::Configs.new
 
 if options.has_key?(:value)
   configs.set!(key: options[:key], value: options[:value])
