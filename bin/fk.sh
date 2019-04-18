@@ -34,7 +34,10 @@ fclone()
 
 remote-info()
 {
+  local ownerName=''
+  local repoName=''
   repoName=$(basename $(git config --get remote.origin.url) .git)
+
   if git config --get remote.origin.url | grep "@" > /dev/null; then
     ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
   else 
