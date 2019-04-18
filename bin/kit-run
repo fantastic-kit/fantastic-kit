@@ -1,19 +1,22 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
+require_relative '../lib/fkit'
 
 configs = YAML.load_file(ARGV[0])
 action=ARGV[1]
 
 unless configs && configs.has_key?("commands")
   puts "command section is missing from kit.yml"
+  puts FKit::HELP_MSG
   exit(1)
 end
 
 cmds = configs["commands"]
 
 unless cmds.has_key?(action) && cmds[action].has_key?("run")
-  puts "`run` command not specified"
+  puts "\e[94m#{action}\e[39m command not specified"
+  puts FKit::HELP_MSG
   exit(1)
 end
 

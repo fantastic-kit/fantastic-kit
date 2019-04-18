@@ -96,7 +96,7 @@ frun()
   done
   echo "found kit.yml in $repoDir"
   cd $originalDir
-  fk.rb $repoDir/kit.yml $@
+  kit-run $repoDir/kit.yml $@
 }
 
 fload-dev() {
