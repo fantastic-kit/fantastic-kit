@@ -107,6 +107,11 @@ fload-dev() {
 fk()
 {
   cmd=$1
+  if [[ $cmd == '' ]]; then
+    kit-help
+    return 1
+  fi
+
   shift;
   case $cmd in
   cd)
@@ -130,6 +135,9 @@ fk()
     kit-check-update
   repo)
     frepo
+  ;;
+  help)
+    kit-help
   ;;
   *)
     frun $cmd $@
