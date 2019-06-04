@@ -20,6 +20,7 @@ The fish flavour does not support all the features, but they're going to be impl
 
 - `fk cd`
 - `fk clone`
+- `fk pr`
 
 ## Built-in commands
 
