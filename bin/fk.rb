@@ -18,6 +18,7 @@ unless cmds.has_key?(action) && cmds[action].has_key?("run")
 end
 
 cmd = cmds[action]["run"]
+args = ARGV[2..-1].join(' ')
 
-puts "fk is running #{cmd} #{ARGV[2..-1].join(' ')}"
-exec([cmd, ARGV[2..-1].join(' ')].join(' '))
+puts "fk is running #{cmd} #{args}"
+exec([cmd, args].join(' '))
