@@ -1,52 +1,72 @@
 # Fantastic Kit 🔥🔥🔥
 
-Command line utility `fk` (stands for **F**antastic **K**it) 10x your development productivity. 
+Welcome!
 
-`fk` provides some useful commands that increase developers productivity. `fk` assumes all git source directory locate at `$HOME/src/github.com/`.
+**What is fantastic-kit?**
+
+Fantastic Kit is a command line utility inspired from Shopify's internal developer tool `dev`.
+
+All commands are based off `fk` (stands for **F**antastic **K**it)
+
+**Why give a fk (fantastic-kit)?**
+
+The `fk` command wants to make you *- the developer -* more productive! 
+
+**What else do I need to know?**
+
+`fk` assumes all git source directories are located at `$HOME/src/github.com/`.
+
+
 
 ## Installation
 
-### Bash
+### Bash Users
 
 Run `curl https://raw.githubusercontent.com/fantastic-kit/fantastic-kit/master/bin/install.sh | bash`
 
-### Fish
+### Fish Users
 
-Install fantastic kit using fisher. Run `fisher add fantastic-kit/fantastic-kit`
+Install fantastic kit using fisher. 
 
-The fish flavour does not support all the features, but they're going to be implemented soon. Currently, fish supports:
+Run `fisher add fantastic-kit/fantastic-kit`
+
+Currently, only the following features are supported for the fish flavour. 
 
 - `fk cd`
 - `fk clone`
-- `fk pr`
+
+We are working on implementing the rest of the features soon.
 
 ## Built-in commands
 
 ### fk cd
 
-`cd` into a project located in `$HOME/src/github.com`, also supports zsh-autosuggest prompt.
+`cd` into a project located in `$HOME/src/github.com`. Also supports zsh-autosuggest prompt.
 
 ### fk clone
 
-`git clone` a repository from github into `$HOME/src/github.com/` and `cd` into the project directory. It reads from `.gitconfig` for username for github.
+`git clone` a repository from github into `$HOME/src/github.com/` and `cd` into the project directory. It retrieves github username from the `.gitconfig` 
 
 Cloning your own repository
 
-``` bash
+```bash
 fk clone <my-own-repo>
 ```
 
 Cloning someone else's public repo:
 
-``` bash
+```bash
 fk clone <git-username>/<repo-name>
 ```
 
 ### fk pr
 
-Open github PRs if opened inside a git directory if the current branch is not master branch.
+Opens a github PR if user is
 
-``` bash
+1. inside a git repository **and**
+2. not on the master branch
+
+```bash
 fk pr
 ```
 
@@ -60,11 +80,11 @@ fk repo
 
 ### fk `<custom-cmd>`
 
-Create `kit.yml` file at the root of the project. Add custom commands to `commands` section.
+Using `kit.yml` file at the root of the project. Add custom commands to `commands` section.
 
 Example `kit.yml`: it compiles latex to pdf based on name of the subdirectory:
 
-``` yaml
+```yaml
 commands:
   latex:
     run:  latexmk -pdf -pvc $(pwd | xargs basename).tex
