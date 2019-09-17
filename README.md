@@ -50,6 +50,14 @@ Open github PRs if opened inside a git directory if the current branch is not ma
 fk pr
 ```
 
+### fk repo
+
+Open current repo on github
+
+``` bash
+fk repo
+```
+
 ### fk `<custom-cmd>`
 
 Create `kit.yml` file at the root of the project. Add custom commands to `commands` section.
