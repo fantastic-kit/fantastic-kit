@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require_relative '../lib/fkit'
+
+options = {list: false}
+OptionParser.new do |opts|
+  opts.on('-l', '--list', 'list all') do |l|
+    options[:list] = true
+  end
+
+  opts.on('-k KEY', '--key=KEY', 'get value for <key>') do |key|
+    options[:key] = key
+  end
+
+  opts.on('-v VAL', '--value=VAL', 'set config for <key> to <value>') do |value|
+    options[:value] = value
+  end
+end.parse!
+
+configs = FKit::Configs.new
+
+unless options.has_key?(:key) or options[:list]
+  puts configs.help_text
+  exit(1)
+end
+
+if options.has_key?(:value)
+  configs.set!(key: options[:key], value: options[:value])
+  puts "#{options[:key]}: #{configs.get(key: options[:key])}"
+elsif options[:list]
+  configs.all.each do |k, v|
+    puts "#{k}: #{v}"
+  end
+else
+  puts configs.get(key: options[:key])
+end
+

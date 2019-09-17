@@ -2,6 +2,9 @@
 
 source $FANTASTIC_ROOT/bin/wrappers.sh
 
+# check for updates
+kit-check-update
+
 fcd()
 {
   cd $HOME/src/github.com/$1
@@ -86,21 +89,31 @@ fload-dev() {
 
 fk()
 {
-  case $1 in
+  cmd=$1
+  shift;
+  case $cmd in
   cd)
-    fcd $2
+    fcd $@
   ;;
   clone)
-    fclone $2
+    fclone $@
   ;;
   pr)
-    fpr $2
+    fpr $@
   ;;
   load-dev)
     fload-dev
   ;;
+  config)
+    kit-config $@
+  ;;
+  update)
+    # enable upgrade flag
+    fk config --key=autoUpdateEnabled --value=true > /dev/null
+    kit-check-update
+  ;;
   *)
-    frun $@
+    frun $cmd
   ;;
   esac
 }
