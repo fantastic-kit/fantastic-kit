@@ -133,6 +133,7 @@ fk()
     # enable upgrade flag
     fk config --key=autoUpdateEnabled --value=true > /dev/null
     kit-check-update
+  ;;
   repo)
     frepo
   ;;
