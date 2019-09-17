@@ -36,14 +36,14 @@ appendIfNotExist "######## Setup script setup by fantastic-kit ########"
 # export env var for fantastic-kit itself
 appendIfNotExist "export FANTASTIC_ROOT=\$HOME/.fantastic-kit"
 
+# update $PATH to include scripts needed for fk
+appendIfNotExist "export PATH=\$FANTASTIC_ROOT/bin:\$PATH"
+
 # sourcing fk.sh if it is not already added to the .zshrc file
 appendIfNotExist "source \$FANTASTIC_ROOT/bin/fk.sh"
 
 # sourcing fk.sh if it is not already added to the .zshrc file
 appendIfNotExist "source \$HOME/.fantastic-kit/bin/fk.sh"
-
-# update $PATH to include scripts needed for fk
-appendIfNotExist "export PATH=\$FANTASTIC_ROOT/bin:\$PATH"
 
 # setup fpath for autocomplete function
 appendIfNotExist "fpath=(\$FANTASTIC_ROOT/autocompletion \$fpath)"
