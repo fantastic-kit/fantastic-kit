@@ -132,7 +132,7 @@ fk()
     frepo
   ;;
   *)
-    frun $cmd
+    frun $cmd $@
   ;;
   esac
 }
