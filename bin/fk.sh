@@ -96,7 +96,7 @@ frun()
   done
   echo "found kit.yml in $repoDir"
   cd $originalDir
-  fk.rb $repoDir/kit.yml $@
+  kit-run $repoDir/kit.yml $@
 }
 
 fload-dev() {
@@ -107,6 +107,11 @@ fload-dev() {
 fk()
 {
   cmd=$1
+  if [[ $cmd == '' ]]; then
+    kit-help
+    return 1
+  fi
+
   shift;
   case $cmd in
   cd)
@@ -130,6 +135,9 @@ fk()
     kit-check-update
   repo)
     frepo
+  ;;
+  help)
+    kit-help
   ;;
   *)
     frun $cmd $@
