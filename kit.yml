@@ -12,9 +12,13 @@ commands:
     run:
       docker run -it --rm --name zsh
         --mount type=bind,source=$HOME/src/github.com/fantastic-kit/bin/install.sh,target=/root/install.sh,readonly
+        --mount type=bind,source=$HOME/src/github.com/fantastic-kit/configs/default_config.yml,target=/root/.config/fantastic-kit/config.yml,readonly
         --mount type=bind,source=$HOME/.ssh,target=/root/.ssh,readonly
         --mount type=bind,source=$HOME/.gitconfig,target=/root/.gitconfig,readonly
         --mount type=bind,source=$HOME/src/github.com/fantastic-kit/misc/zshrc_installed,target=/root/.zshrc,readonly
         --mount type=bind,source=$HOME/src/github.com/fantastic-kit,target=/root/.fantastic-kit,readonly
         omz
     desc: directly install fantastic-kit into docker env
+  irb:
+    run: irb -I . -r $HOME/src/github.com/fantastic-kit/lib/fkit.rb
+    desc: run irb with FKit loaded
