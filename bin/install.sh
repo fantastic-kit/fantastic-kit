@@ -8,6 +8,7 @@ appendIfNotExist() {
 
 kitDir=$HOME/.fantastic-kit
 kitConfigDir=$HOME/.config/fantastic-kit
+kitRootSrcDir=$HOME/src/github.com
 
 # in case user has already installed fk, nuke everything and reinstall
 if [[ -d $kitDir ]]; then
@@ -26,8 +27,16 @@ fi
 
 # setup $HOME/.config/fantastic-kit
 mkdir -p $kitConfigDir
-cp $kitDir/configs/default_config.yml $kitConfigDir/config.yml
 echo $(date +'%s') > $kitConfigDir/lastUpdated
+
+read -p "Setting up root source repository path: (default: $kitRootSrcDir)" rootSrcDir < /dev/tty
+if [[ -n $rootSrcDir ]]; then
+  kitRootSrcDir=$rootSrcDir
+fi
+
+currentVersion=$(git --git-dir="$kitDir/.git" rev-parse HEAD)
+mkdir -p $kitRootSrcDir
+erb sha="$currentVersion" rootSrcPath="$kitRootSrcDir" "$kitDir/configs/default_config.yml.erb" > "$kitConfigDir/config.yml"
 
 echo -e "Appending following configurations to ~/.zshrc\e[91m"
 
