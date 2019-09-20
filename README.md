@@ -20,7 +20,7 @@ The `fk` command wants to make you *- the developer -* more productive!
 
 ## Installation
 
-### Bash Users
+### Zsh Users
 
 Run `curl https://raw.githubusercontent.com/fantastic-kit/fantastic-kit/master/bin/install.sh | bash`
 
