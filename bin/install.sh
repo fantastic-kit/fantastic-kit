@@ -29,9 +29,11 @@ fi
 mkdir -p $kitConfigDir
 echo $(date +'%s') > $kitConfigDir/lastUpdated
 
-read -p "Setting up root source repository path: (default: $kitRootSrcDir)" rootSrcDir < /dev/tty
+read -p "Setting up root source repository path (default: $kitRootSrcDir): " rootSrcDir < /dev/tty
 if [[ -n $rootSrcDir ]]; then
-  kitRootSrcDir=$rootSrcDir
+  eval expandedPath=$rootSrcDir
+  kitRootSrcDir=$expandedPath
+  echo "Creating directory: $kitRootSrcDir"
 fi
 
 currentVersion=$(git --git-dir="$kitDir/.git" rev-parse HEAD)

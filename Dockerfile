@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 # install oh-my-zsh
 RUN apt-get update && \
-  apt-get install -y git curl vim locales gnupg2 zsh ruby && \
+  apt-get install -y git curl vim locales zsh ruby && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   chsh -s $(which zsh)
