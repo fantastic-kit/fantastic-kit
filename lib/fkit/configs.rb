@@ -4,6 +4,7 @@ require 'fileutils'
 module FKit
   class Configs
     CONFIG_PATH = "#{ENV['HOME']}/.config/fantastic-kit/config.yml".freeze
+    CONFIG_BACKUP = "#{ENV['HOME']}/.config/fantastic-kit/.config.yml.backup".freeze
 
     # key constants
     AUTO_UPDATE_ENABLED = 'autoUpdateEnabled'.freeze
@@ -43,7 +44,13 @@ Usage: fk config [options]
 
     def ensure_configs_file_exist
       unless File.exist?(CONFIG_PATH)
-        FileUtils.cp DEFAULT_CONFIG_PATH, CONFIG_PATH
+        puts 'Corrupt config file detected, attempting repair...'
+        if File.file?(CONFIG_BACKUP)
+          FileUtils.cp CONFIG_BACKUP, CONFIG_PATH
+          puts 'Repair done.'
+        else
+          raise 'Unable to restore config file, please try reinstall fantastic-kit'
+        end
       end
     end
 

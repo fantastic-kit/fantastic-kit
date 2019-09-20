@@ -39,6 +39,7 @@ fi
 currentVersion=$(git --git-dir="$kitDir/.git" rev-parse HEAD)
 mkdir -p $kitRootSrcDir
 erb sha="$currentVersion" rootSrcPath="$kitRootSrcDir" "$kitDir/configs/default_config.yml.erb" > "$kitConfigDir/config.yml"
+cp "$kitConfigDir/config.yml" "$kitConfigDir/.config.yml.backup" # back a copy of the config file as backup
 
 echo -e "Appending following configurations to ~/.zshrc\e[91m"
 
