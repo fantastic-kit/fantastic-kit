@@ -1,20 +1,24 @@
+require 'net/http'
+require 'json'
+
 require_relative '../fkit'
 
 module FKit
   class Updater
     UPDATE_TIMESTAMP_FILE = "#{ENV['HOME']}/.config/fantastic-kit/lastUpdated"
+    RELEASE_TAG_BASE_URL= 'https://api.github.com/repos/fantastic-kit/fantastic-kit/git/refs/tags'
 
     def need_to_update?
-      (Time.now - last_updated) > configs.get(key: 'updatePollIntervalS').to_i
+      old_enough? && latest_version != current_version
     end
 
-    # TODO actually check for git SHA
     def update!
       kitDir = ENV['FANTASTIC_ROOT']
       raise 'FANTASTIC_ROOT environment variable is not set' unless kitDir
       puts 'Updating fantastic-kit'
       system({'GIT_DIR' => "#{kitDir}/.git"}, 'git pull origin master')
       File.open(UPDATE_TIMESTAMP_FILE, 'w') { |f| f.write(Time.now.to_i) }
+      configs.set!(key: 'sha', value: latest_version)
     end
 
     private
@@ -33,6 +37,33 @@ module FKit
       unless File.exist?(UPDATE_TIMESTAMP_FILE)
         File.open(UPDATE_TIMESTAMP_FILE, 'w') { |f| f.write(0) }
       end
+    end
+
+    def latest_version
+      @latest_version ||= fetch_latest_sha_from_github
+    end
+
+    def fetch_latest_sha_from_github
+      uri = URI("#{RELEASE_TAG_BASE_URL}/#{tag_name}")
+      resp = Net::HTTP.get(uri)
+      hash = JSON[resp]
+      hash['object']['sha']
+    end
+
+    def tag_name
+      @tag_name ||= configs.get(key: 'branch')
+    end
+
+    def current_version
+      @current_version ||= configs.get(key: 'sha')
+    end
+
+    def update_poll_interval
+      @update_poll_interval ||= configs.get(key: 'updatePollIntervalS').to_i
+    end
+
+    def old_enough?
+      (Time.now - last_updated) > update_poll_interval
     end
   end
 end
