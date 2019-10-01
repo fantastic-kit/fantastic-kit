@@ -1,10 +1,12 @@
-FROM zshusers/zsh-5.6.2
+FROM ubuntu:18.04
 
 # install oh-my-zsh
 RUN apt-get update && \
-  apt-get install -y git ruby curl vim locales && \
+  apt-get install -y git curl vim locales zsh ruby && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  chsh -s $(which zsh)
+
 RUN curl -fsSL https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | zsh || true
 
 # fix docker zsh locale setup
@@ -22,3 +24,4 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 WORKDIR /root
+CMD ["zsh"]
