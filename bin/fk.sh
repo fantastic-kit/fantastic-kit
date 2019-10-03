@@ -7,7 +7,7 @@ kit-check-update
 
 fcd()
 {
-  cd $HOME/src/github.com/$1
+  cd $(fk config --key=rootSrcPath)/$1
 }
 
 fclone()
@@ -16,15 +16,16 @@ fclone()
   if echo $1 | grep '/' > /dev/null; then
     echo "Cloning from git@github.com:$1.git"
     cdDir=$(cut -d'/' -f2 <<< $1)
-    if [ ! -d $HOME/src/github.com/$cdDir ]; then
-      git clone git@github.com:$1.git $HOME/src/github.com/$cdDir
+    rootSrcPath=$(fk config --key=rootSrcPath)
+    if [ ! -d $rootSrcPath/$cdDir ]; then
+      git clone git@github.com:$1.git $rootSrcPath/$cdDir
     else
       echo "Already cloned, done."
     fi
   else
     echo "Cloning from git@github.com:$(git config user.name)/$1.git"
-    if [[ ! -d $HOME/src/github.com/$cdDir ]]; then
-      git clone git@github.com:$(git config user.name)/$1.git $HOME/src/github.com/$1
+    if [[ ! -d $rootSrcPath/$cdDir ]]; then
+      git clone git@github.com:$(git config user.name)/$1.git $rootSrcPath/$1
     else
       echo "Already cloned, done."
     fi
