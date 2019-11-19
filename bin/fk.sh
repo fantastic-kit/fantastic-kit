@@ -13,17 +13,17 @@ fcd()
 fclone()
 {
   cdDir=$1
+  rootSrcPath=$(fk config --key=rootSrcPath)
   if echo $1 | grep '/' > /dev/null; then
-    echo "Cloning from git@github.com:$1.git"
     cdDir=$(cut -d'/' -f2 <<< $1)
-    rootSrcPath=$(fk config --key=rootSrcPath)
+    echo "Cloning from git@github.com:$1.git to $rootSrcPath/$cdDir"
     if [ ! -d $rootSrcPath/$cdDir ]; then
       git clone git@github.com:$1.git $rootSrcPath/$cdDir
     else
       echo "Already cloned, done."
     fi
   else
-    echo "Cloning from git@github.com:$(git config user.name)/$1.git"
+    echo "Cloning from git@github.com:$(git config user.name)/$1.git to $rootSrcPath/$cdDir"
     if [[ ! -d $rootSrcPath/$cdDir ]]; then
       git clone git@github.com:$(git config user.name)/$1.git $rootSrcPath/$1
     else
