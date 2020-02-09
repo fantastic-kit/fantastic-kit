@@ -23,9 +23,9 @@ fclone()
       echo "Already cloned, done."
     fi
   else
-    echo "Cloning from git@github.com:$(git config user.name)/$1.git to $rootSrcPath/$cdDir"
+    echo "Cloning from git@github.com:$(fk config --key=gitUsername)/$1.git to $rootSrcPath/$cdDir"
     if [[ ! -d $rootSrcPath/$cdDir ]]; then
-      git clone git@github.com:$(git config user.name)/$1.git $rootSrcPath/$1
+      git clone git@github.com:$(fk config --key=gitUsername)/$1.git $rootSrcPath/$1
     else
       echo "Already cloned, done."
     fi

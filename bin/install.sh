@@ -10,6 +10,12 @@ kitDir=$HOME/.fantastic-kit
 kitConfigDir=$HOME/.config/fantastic-kit
 kitRootSrcDir=$HOME/src/github.com
 
+# check if git is installed
+if ! command -v git > /dev/null; then
+  echo "Git is required to install fantastic-kit. Please install git"
+  exit 1
+fi
+
 # in case user has already installed fk, nuke everything and reinstall
 if [[ -d $kitDir ]]; then
   read -p "fantastic-kit is already installed in the system, do you want to clean reinstall? [Yy/Nn]" reclone < /dev/tty
@@ -29,6 +35,13 @@ fi
 mkdir -p $kitConfigDir
 echo $(date +'%s') > $kitConfigDir/lastUpdated
 
+kitGitUsername=$(git config user.name)
+read -p "Enter your git usename (default: $kitGitUsername): " gitUsername < /dev/tty
+if [[ -n $gitUsername ]]; then
+  kitGitUsername=$gitUsername
+  echo "Setting git username to $kitGitUsername"
+fi
+
 read -p "Setting up root source repository path (default: $kitRootSrcDir): " rootSrcDir < /dev/tty
 if [[ -n $rootSrcDir ]]; then
   eval expandedPath=$rootSrcDir
@@ -38,7 +51,10 @@ fi
 
 currentVersion=$(git --git-dir="$kitDir/.git" rev-parse HEAD)
 mkdir -p $kitRootSrcDir
-erb sha="$currentVersion" rootSrcPath="$kitRootSrcDir" "$kitDir/configs/default_config.yml.erb" > "$kitConfigDir/config.yml"
+erb sha="$currentVersion" \
+    rootSrcPath="$kitRootSrcDir" \
+    gitUsername="$kitGitUsername" \
+    "$kitDir/configs/default_config.yml.erb" > "$kitConfigDir/config.yml"
 cp "$kitConfigDir/config.yml" "$kitConfigDir/.config.yml.backup" # back a copy of the config file as backup
 
 echo -e "Appending following configurations to ~/.zshrc\e[91m"
