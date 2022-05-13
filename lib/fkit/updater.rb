@@ -40,14 +40,22 @@ module FKit
     end
 
     def latest_version
-      @latest_version ||= fetch_latest_sha_from_github
+      begin
+        @latest_version ||= fetch_latest_sha_from_github
+      rescue
+        exit
+      end
     end
 
     def fetch_latest_sha_from_github
       uri = URI("#{RELEASE_TAG_BASE_URL}/#{tag_name}")
       resp = Net::HTTP.get(uri)
-      hash = JSON[resp]
-      hash['object']['sha']
+      if resp.kind_of? Net::HTTPSuccess
+        hash = JSON[resp]
+        hash['object']['sha']
+      else
+        raise "Unable to contact GitHub"
+      end
     end
 
     def tag_name
