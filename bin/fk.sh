@@ -41,7 +41,7 @@ remote-info()
 
   if git config --get remote.origin.url | grep "@" > /dev/null; then
     ownerName=$(git config --get remote.origin.url | cut -d'/' -f1 | cut -d':' -f2)
-  else 
+  else
     ownerName=$(git config --get remote.origin.url | awk -F "/" '{print $(NF-1)}')
 fi
   echo $repoName $ownerName
@@ -100,6 +100,81 @@ frun()
   kit-run $repoDir/kit.yml $@
 }
 
+fup-help() {
+    echo "fk up [OPTIONS] repositoryName"
+    echo "Options: "
+    echo " --username|-u     github-username        Username undeer whom the repository will be created."
+    echo " --description|-d  \"description text\"   Repository description."
+    echo " --ssh                                    Configure remote origin to be over ssh."
+    echo " --private|-p                             Makes the repository private."
+    echo "If you select this option, Fantastic Kit is not repsonsible for any cost incurred by you or your organization."
+}
+
+fup() {
+    local username=$(fk config --key=gitUsername 2> /dev/null)
+    local private="false"
+    local description=""
+    local ssh=""
+    while [[ $1 ]]; do
+        case $1 in
+            --username|-u)
+                username=$2
+                shift
+                ;;
+            --private|-p)
+                private="true"
+                ;;
+            --ssh)
+                ssh="true"
+                ;;
+            --description|-d)
+                description=$2
+                shift
+                ;;
+            *)
+                break
+                ;;
+        esac
+
+        shift
+    done
+
+    local reponame=$1
+
+    if [[ -z $reponame ]]; then
+        echo "Repository name misssing"
+        fup-help
+        return 1
+    fi
+
+    if [[ -z $username ]]; then
+        echo "Github name misssing"
+        fup-help
+        return 1
+    fi
+
+    local payload="{\"name\": \"$reponame\", \"description\": \"$description\", \"private\": $private}"
+
+    local srcPath=$(fk config --key=rootSrcPath)
+    local projectDir=$srcPath/$username/$reponame
+
+    local remoteUrl="https://github.com/$username/$reponame"
+    if [[ ! -z $ssh ]]; then
+        remoteUrl="git@github.com:$username/$reponame.git"
+    fi
+
+    local result=$(curl -sS -u $username -X POST https://api.github.com/user/repos --data $payload)
+    local errors=$(echo $result | grep errors)
+    if [[ ! -z $errors ]]; then
+        echo $result
+        return 1
+    fi
+    mkdir -p $projectDir
+    cd $projectDir
+    git init
+    git remote add origin $remoteUrl
+}
+
 fload-dev() {
   source $HOME/src/github.com/fantastic-kit/bin/load-dev && load-dev
 }
@@ -115,6 +190,9 @@ fk()
 
   shift;
   case $cmd in
+  up)
+    fup $@
+  ;;
   cd)
     fcd $@
   ;;
